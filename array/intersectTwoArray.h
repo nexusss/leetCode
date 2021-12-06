@@ -1,7 +1,7 @@
 #ifndef INTERSECTTWOARRAY_H
 #define INTERSECTTWOARRAY_H
 #include <vector>
-#include <set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -11,18 +11,19 @@ public:
         if (nums2.size() < nums1.size())
             swap(nums2, nums1);
 
-        multiset <int> set1;
+        unordered_map <int, int> set1;
 
         for(auto & n: nums1){
-            set1.emplace(n);
+            set1[n]++;
         }
 
         vector <int> result;
 
         for(auto &n: nums2){
-            if(set1.find(n) != set1.end()){
-                result.push_back(n);
-            }
+            if(set1[n] > 0){
+                           result.push_back(n);
+                           set1[n]--;
+                       }
         }
 
         return result;
