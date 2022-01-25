@@ -8,35 +8,45 @@ using namespace std;
 
 class Solution {
 public:
-    void findTwoSum(vector<int>& nums, size_t dontCheck, int target, vector<vector<int>> &res){
-        unordered_map <int, int> numshash;
+    void setZeroes(vector<vector<int>>& matrix) {
+        bool isCol = false;
         
-        for(int i = dontCheck + 1; i < nums.size(); ++i){
+        for (int i = 0; i < matrix.size(); ++i){
+            if (matrix[i][0] == 0)
+                isCol= true;
             
-            auto result = target - nums.at(i);
-            auto findIter = numshash.find(nums.at(i));
-            if (findIter != numshash.end()){
-                res.push_back({findIter->second, nums.at(i), target * -1});
-                while ( i + 1 < nums.size() and nums.at(i) == nums.at(i + 1))
-                    ++i;
-            }
-            numshash.emplace(result, nums.at(i));
-        }
-    }
-    
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>> result;
-        sort(begin(nums), end(nums));
-        if (nums.size() >= 3){
-            for (int i = 0; i < nums.size() && nums[i] <= 0; ++i){
-                if (i == 0 || nums[i - 1] != nums[i]) {
-                    findTwoSum(nums, i, nums.at(i) * -1, result);
-                    
+            for(int j = 1; j < matrix[i].size(); ++j){
+                if (matrix[i][j] == 0){
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
                 }
             }
         }
         
-        return result;
+        for (int i = 1; i < matrix.size(); ++i){
+            for(int j = 1; j < matrix[i].size(); ++j){
+                if (matrix[i][0] == 0 || matrix[0][j] == 0){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        
+        if(matrix[0][0] == 0){
+            for (int j = 0; j < matrix[0].size(); ++j){
+                    matrix[0][j] = 0;
+            }
+        }
+        
+        
+        
+        if(isCol){
+            for (int i = 0; i < matrix.size(); ++i){
+                matrix[i][0] = 0;
+            }    
+            
+        }
+        
     }
 };
 
