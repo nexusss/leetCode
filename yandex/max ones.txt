@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        
+
+        size_t maxLongenstRepeat = 0;
+
+        size_t zeroCounter = 0;
+
+        size_t l = 0, r = 0;
+        
+        while(r < nums.size()){
+
+            if (nums[r] != 1 ){
+               
+                if (zeroCounter < k){
+                    ++zeroCounter;
+                    
+                }
+                else{
+                    maxLongenstRepeat = max(maxLongenstRepeat, r - l);
+                    while(nums[l] == 1){
+                        ++l;
+                    }
+                    ++l;
+                }
+            }
+            ++r;
+        }
+
+        maxLongenstRepeat = max(maxLongenstRepeat, r - l);
+
+        return maxLongenstRepeat;
+    }
+};

@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        stack <char> st;
+        
+        for (auto c: s){
+            if (c == '(' || c == '[' || c == '{'){
+                st.push(c);
+            }
+            else{
+                if (st.empty()){
+                    return false;
+                }
+                auto parentheses = st.top();
+                if (c == ')' && parentheses == '('){
+                    st.pop();
+                    continue;
+                }
+                if (c == ']' && parentheses == '['){
+                    st.pop();
+                    continue;
+                }
+                if (c == '}' && parentheses == '{'){
+                    st.pop();
+                    continue;
+                }
+                return false;
+            }
+        }
+        
+        return st.empty();
+    }
+};

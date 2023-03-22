@@ -1,0 +1,53 @@
+from heapq import *
+
+
+def minimum_cost_get_pattern(string, pattern):
+    n = len(string) + 1
+    m = len(pattern) + 1
+
+    distance = [[0 for x in range(n)] for x in range(m)]
+
+    print("distance", distance)
+
+    for x in range(n):
+        distance[0][x] = x
+
+    for x in range(m):
+        distance[x][0] = x
+
+    print("distance", distance)
+    
+    for x in range(1, m):
+        for y in range(1, n):
+            cost = 1 if pattern[x - 1] != string[y - 1] else 0
+            distance[x][y] = min([distance[x - 1][y] + 1, distance[x][y - 1] + 1, distance[x - 1][y - 1] + cost])
+
+    return distance[m - 1][n - 1]
+
+
+# list of string for matching
+string_list = set(
+    ['Lorem', 'Ipsum', 'is', 'simply', 'dummy', 'text', 'of', 'the', 'printing', 'and', 'typesetting', 'industry.',
+     'Lorem', 'Ipsum', 'has', 'been', 'the', 'industrys', 'standard', 'dummy', 'text', 'ever', 'since', 'the', '1500s',
+     'when', 'an', 'unknown', 'printer', 'took', 'a', 'galley', 'of', 'type', 'and', 'scrambled', 'it', 'to', 'make',
+     'a', 'type', 'specimen', 'book.', 'It', 'has', 'survived', 'not', 'only', 'five', 'centuries', 'but', 'also',
+     'the', 'leap', 'into', 'electronic', 'typesetting', 'remaining', 'essentially', 'unchanged.', 'It', 'was',
+     'popularised', 'in', 'the', '1960s', 'with', 'the', 'release', 'of', 'Letraset', 'sheets', 'containing', 'Lorem',
+     'Ipsum', 'passages', 'and', 'more', 'recently', 'with', 'desktop', 'publishing', 'software', 'like', 'Aldus',
+     'PageMaker', 'including', 'versions', 'of', 'Lorem', 'Ipsum', 'lrem', 'rem', 'lreom'])
+pattern = 'rem'
+
+# since we need to find an approximate pattern where cost is minimum.
+# Min heap/Min priority queue will work best in our case.
+heap = []
+for string in string_list:
+    cost = minimum_cost_get_pattern(string, pattern)
+    heappush(heap, (cost, string))
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    for _ in range(5):
+        print(heappop(heap))
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/

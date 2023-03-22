@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map <int,int> mp;
+
+        int sum = 0;
+        int res = 0;
+
+        for(auto n: nums){
+            
+            sum += n;
+
+            if (sum == k){
+                res++;
+            }
+
+            auto rem = sum - k;
+
+            if (mp[rem] > 0){
+                res += mp[rem];
+            }
+
+            mp[sum]++;
+        }
+
+ 
+        return res;
+    }
+};

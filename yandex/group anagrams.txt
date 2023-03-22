@@ -1,0 +1,26 @@
+class Solution {
+public:
+    
+    
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> result;
+        unordered_map<string, int> mp;
+        
+        for(auto &str: strs){
+            auto tmpStr = str;
+            sort(tmpStr.begin(), tmpStr.end());
+            auto find = mp.find(tmpStr);
+            if (find == mp.end()){
+                result.push_back({str});
+                mp[tmpStr] = result.size() - 1;
+            }
+            else{
+                auto index = find->second;
+                result[index].push_back(str);
+            }
+
+        }
+
+        return result;
+    }
+};

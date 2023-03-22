@@ -1,0 +1,64 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        if(n < 1){
+            return {};
+        }
+        
+        int downBorder = n - 1;
+        int rightBorder = n - 1;
+        int upBorder = 0;
+        int leftBorder = 0;
+        
+        vector<vector<int>> result(n, vector<int>(n, 0));
+        
+        enum class Direct {left, down, right, up};
+        
+        auto direct = Direct::left;
+        size_t resultIter = 1;
+        while (resultIter - 1 < n * n){
+            
+            switch(direct){
+                case Direct::left:{
+                    for (int i = leftBorder; i <= rightBorder; ++i, ++resultIter){
+                        //cout << "1 resultIter " << matrix.at(upBorder).at(i) << " " << resultIter << endl;
+                        result[upBorder][i] = resultIter;
+                    }
+                    direct = Direct::down;
+                    ++upBorder;
+                    break;
+                }
+                case Direct::down:{
+                    for (int i = upBorder; i <= downBorder; ++i, ++resultIter){
+                        //cout << "2 resultIter " << matrix.at(i).at(rightBorder) << " " << resultIter << endl;
+                        result[i][rightBorder] = resultIter;
+                    }
+                    direct = Direct::right;
+                    --rightBorder;
+                    break;
+                }
+                case Direct::right: {
+                    for (int i = rightBorder; i >= leftBorder; --i, ++resultIter){
+                        //cout << "3 resultIter " << matrix.at(downBorder).at(i) << " " << resultIter << endl;
+                        result[downBorder][i] = resultIter;
+                    }
+                    direct = Direct::up;
+                    --downBorder;
+                    break;
+                }
+                case Direct::up: {
+                    for (int i = downBorder; i >= upBorder; --i, ++resultIter){
+                        //cout << "4 resultIter " << matrix.at(i).at(leftBorder) << " " << resultIter << endl;
+                        result[i][leftBorder] = resultIter;
+                    }
+                    direct = Direct::left;
+                    ++leftBorder;
+                    break;
+                }
+            }
+            
+        }
+        return result;
+        
+    }
+};

@@ -1,0 +1,29 @@
+﻿  ConsoleApplication1.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\xmemory(230,12): error C2664: "Mystring::Mystring(const Mystring &)": невозможно преобразовать аргумент 1 из "_Ty" в "const Mystring &"
+          with
+          [
+              _Ty=Mystring **
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\xmemory(228,1): message : Причина: невозможно преобразовать "_Ty" в "const Mystring"
+          with
+          [
+              _Ty=Mystring **
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\xmemory(228,1): message : Ни один конструктор не смог принять исходный тип, либо разрешение перегрузки конструктора неоднозначно
+D:\leetCode\autoTest\ConsoleApplication1\ConsoleApplication1.cpp(27,5): message : см. объявление "Mystring::Mystring"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\memory(1427): message : выполняется компиляция ссылки на экземпляр шаблон функции "void std::_Construct_in_place<_Ty,Mystring**>(_Ty &,Mystring **&&) noexcept(false)"
+          with
+          [
+              _Ty=Mystring
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\memory(2071): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<Mystring**>(Mystring **&&)"
+          with
+          [
+              _Ty=Mystring
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\memory(2072): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<Mystring**>(Mystring **&&)"
+          with
+          [
+              _Ty=Mystring
+          ]
+D:\leetCode\autoTest\ConsoleApplication1\ConsoleApplication1.cpp(98): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::shared_ptr<Mystring> std::make_shared<Mystring,Mystring**>(Mystring **&&)"

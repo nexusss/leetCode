@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        if (s1.size() > s2.size())
+            return false;
+        
+        array< size_t, 26> s1arr = {0};
+
+        for(auto c: s1){
+            s1arr[c - 'a']++;
+        }
+
+        array<size_t, 26> s2arr = {0};
+
+        size_t l = 0;
+        size_t r = 0;
+
+        /*for(size_t i = 0; i < s1arr.size(); ++i){
+            cout << char(i + 'a') << " " << s1arr[i] << endl;
+        }*/
+
+        while (r < s2.size() and r < s1.size()){
+            s2arr[s2[r] - 'a']++;
+            ++r;
+        }
+
+        if (s1arr == s2arr){
+            return true;
+        }
+
+        for(; r < s2.size(); ){
+            s2arr[s2[l] - 'a']--;
+            s2arr[s2[r] - 'a']++;
+            ++l;
+            ++r;
+            
+        
+            if (s1arr == s2arr){
+                return true;
+            }
+            
+        }
+
+        return false;
+        
+    }
+};

@@ -1,0 +1,65 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+using namespace std;
+
+// Define the structure for the tree node
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+// Function to serialize a subtree into a string
+string serialize(TreeNode* root) {
+    if (root == NULL) return "";
+    string s = to_string(root->val) + ",";
+    s += serialize(root->left) + ",";
+    s += serialize(root->right);
+    return s;
+}
+
+// Recursive function to find the frequency of each subtree
+void findSubtrees(TreeNode* root, unordered_map<string, int>& freq, vector<TreeNode*>& res) {
+    if (root == NULL) return;
+    string s = serialize(root);
+    freq[s]++;
+    if (freq[s] == 2) {
+        res.push_back(root);
+    }
+    findSubtrees(root->left, freq, res);
+    findSubtrees(root->right, freq, res);
+}
+
+vector<TreeNode*> findEqualSubtrees(TreeNode* root) {
+    unordered_map<string, int> freq;
+    vector<TreeNode*> res;
+    findSubtrees(root, freq, res);
+    return res;
+}
+
+// Example usage
+int main() {
+    // Construct a tree
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+    root->right->left = new TreeNode(2);
+    root->right->right = new TreeNode(4);
+    root->right->left->left = new TreeNode(4);
+
+    // Find equal subtrees
+    vector<TreeNode*> res = findEqualSubtrees(root);
+
+    // Print the result
+    for (auto node : res) {
+        cout << serialize(node) << endl;
+    }
+
+    return 0;
+}
+optimise it we can use hash not string

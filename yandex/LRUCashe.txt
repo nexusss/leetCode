@@ -1,0 +1,54 @@
+class LRUCache {
+    list<std::pair<int, int>> values; //key, value
+    std::unordered_map<int, decltype(values.begin())> mp;
+
+    int maxCapacity;
+    int capacity = 0;
+public:
+    LRUCache(int capacity) {
+        maxCapacity = capacity;
+    }
+
+    int get(int key) {
+        auto find = mp.find(key);
+        if(find == mp.end()){
+            return -1;
+        }
+        auto listIter = find->second;
+        auto res = (*listIter).second;
+        values.splice(values.begin(), values, listIter);
+        return res;
+
+    }
+
+    void put(int key, int value) {
+        
+
+        auto find = mp.find(key);
+        if(find != mp.end()){
+            auto listIter = find->second;
+            auto &pair = *listIter;
+            pair.second = value;
+            values.splice(values.begin(), values, listIter);
+        }
+        else{
+            if (capacity == maxCapacity){
+                auto last = values.back();
+                values.pop_back();
+                mp.erase(last.first);
+                --capacity;
+            }
+            ++capacity;
+            values.push_front({key, value});
+            mp[key] = values.begin();
+        }
+
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */

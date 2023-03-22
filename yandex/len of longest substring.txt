@@ -1,0 +1,37 @@
+class Solution {
+    
+public:
+    
+
+    int lengthOfLongestSubstring(string s) {
+        
+        unordered_set <char> mp;
+
+        size_t l = 0;
+        size_t r = 0;
+
+        size_t maxResult = 0;
+
+        while(r < s.size()){
+
+            auto find = mp.find(s[r]);
+
+            if (find == mp.end()){
+                mp.insert(s[r]);
+                ++r;
+
+            }
+            else{
+                maxResult = max(maxResult, r - l);
+                while(s[l] != s[r]){
+                    mp.erase(s[l]);
+                    ++l;
+                }
+                mp.erase(s[l]);
+                ++l;
+            }
+        }
+        maxResult = max(maxResult, r - l);
+        return maxResult;
+    }
+};
