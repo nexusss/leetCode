@@ -1,0 +1,65 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class CBTInserter {
+    vector<TreeNode*> tree;
+public:
+
+    CBTInserter(TreeNode* root) {
+        
+        queue <TreeNode* > st;
+
+        st.push(root);
+
+        while(!st.empty()){
+            auto top = st.front();
+            st.pop();
+            if(top != nullptr){
+            tree.push_back(top);
+            
+                st.push(top->left);
+                st.push(top->right);
+                cout << log2(tree.size()) << " " << top->val << endl;
+            }
+            
+        }
+
+    }
+    
+    int insert(int val) {
+        size_t parent = 0;
+        auto tmp = new TreeNode(val);
+
+        if(tree.size() % 2 == 0){
+            parent = (tree.size() - 2) / 2;
+            tree[parent]->right = tmp;
+        }
+        else{
+            parent = (tree.size() - 1) / 2;
+            tree[parent]->left = tmp;
+        }
+        
+        tree.push_back(tmp);
+
+        return tree[parent]->val;
+    }
+    
+    TreeNode* get_root() {
+        return tree[0];
+    }
+};
+
+/**
+ * Your CBTInserter object will be instantiated and called as such:
+ * CBTInserter* obj = new CBTInserter(root);
+ * int param_1 = obj->insert(val);
+ * TreeNode* param_2 = obj->get_root();
+ */

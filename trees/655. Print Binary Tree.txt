@@ -1,0 +1,85 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+    struct Tmp{
+        TreeNode *node;
+        int r;
+        int c;
+        Tmp(TreeNode *node, size_t r, size_t c):node(node), r(r), c(c){}
+    };
+public:
+    void calcHeight(TreeNode* root, size_t &height, size_t cur_height){
+        if(root == nullptr){
+            return;
+        }
+
+        height = max(height, cur_height);
+
+        calcHeight(root->left, height, cur_height + 1);
+        calcHeight(root->right, height, cur_height + 1);
+
+    }
+
+
+    vector<vector<string>> printTree(TreeNode* root) {
+        if (root == nullptr){
+            return {{}};
+        }
+        if (root->left == nullptr and root->right == nullptr){
+            return {{to_string(root->val)}};
+        }
+
+        size_t height = 1;
+        calcHeight(root, height, 1);
+
+        vector<vector<string>> result(height);
+        size_t width = pow(2, height) - 1;
+        for(auto &res: result){
+            res.resize(width);
+        }
+
+        auto curHeight = 0;
+        auto middle = (width - 1) / 2;
+        result[0][middle] = to_string(root->val);
+
+        queue<Tmp> q;
+
+        if(root->left){
+            q.emplace(root->left, curHeight + 1, middle - pow(2, height - curHeight - 2));
+        }
+        if(root->right){
+            
+            q.emplace(root->right, curHeight+ 1, middle + pow(2, height - curHeight - 2));
+        }
+        
+
+        while(!q.empty()){
+            auto top = q.front();
+            q.pop();
+            cout << top.c << " " << top.r << " " << top.node->val << endl;
+            result[top.r][top.c] = to_string(top.node->val);
+            
+            if(top.node->left){
+             //   cout << top.c << " " << height - top.r << pow(2, height - top.r) << " 1 " << top.c - pow(2, height - top.r -1 )<< endl;
+                q.emplace(top.node->left, top.r + 1, top.c - pow(2, height - top.r - 2));
+            }
+            if(top.node->right){
+               // cout << top.c << pow(2, height - top.r - 2) << " 2 " << top.c + pow(2, height - top.r - 2)<< endl;
+                q.emplace(top.node->right, top.r + 1, top.c + pow(2, height - top.r - 2));
+            }
+        }
+
+
+        return result;
+
+    }
+};

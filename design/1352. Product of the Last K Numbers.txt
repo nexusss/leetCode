@@ -1,0 +1,40 @@
+class ProductOfNumbers {
+    vector<int64_t> arr;
+public:
+    ProductOfNumbers() {
+        
+    }
+    
+    void add(int num) {
+        if(arr.empty()){
+            if(num != 0){
+                arr.emplace_back(1);
+                arr.emplace_back(num);
+            }
+            //arr.emplace_back(num);
+        }
+        else{
+            auto prevProd = arr.back();
+            if(num == 0){
+                //num = 1;
+                arr.clear();
+                //arr.emplace_back(prevProd);
+            }
+            else{
+                arr.emplace_back(num * prevProd);
+            }
+        }
+    }
+    
+    int getProduct(int k) {
+        if(k >= arr.size()) return 0;
+        return arr.back() / arr[arr.size() - k -1];
+    }
+};
+
+/**
+ * Your ProductOfNumbers object will be instantiated and called as such:
+ * ProductOfNumbers* obj = new ProductOfNumbers();
+ * obj->add(num);
+ * int param_2 = obj->getProduct(k);
+ */
