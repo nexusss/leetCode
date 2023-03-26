@@ -1,0 +1,29 @@
+class NumMatrix {
+    vector<vector<int>> mmatrix;
+public:
+    NumMatrix(vector<vector<int>>& matrix) {
+        mmatrix.resize(matrix.size() + 1);
+        for(auto& m:mmatrix){
+            m.resize(matrix[0].size() + 1);
+        }
+
+        for(size_t i = 0, ii = 1; i < matrix.size(); ++i, ++ii){
+            for(size_t j = 0, jj = 1; j < matrix[0].size(); ++j, ++jj){
+                mmatrix[ii][jj] = matrix[i][j] + mmatrix[ii - 1][jj] + mmatrix[ii][jj - 1] - mmatrix[ii - 1][jj - 1];
+              //  cout << mmatrix[ii][jj] << "  ";
+            }
+            //cout << endl;
+        }
+    }
+    
+    int sumRegion(int row1, int col1, int row2, int col2) {
+        //cout << "res "<< mmatrix[row2 + 1][col2 + 1] << " " <<  mmatrix[row1 + 1][col1 + 1] << endl;
+        return mmatrix[row2 + 1][col2 + 1] - mmatrix[row1][col2 +1]  - mmatrix[row2 +1][col1] + mmatrix[row1][col1];
+    }
+};
+
+/**
+ * Your NumMatrix object will be instantiated and called as such:
+ * NumMatrix* obj = new NumMatrix(matrix);
+ * int param_1 = obj->sumRegion(row1,col1,row2,col2);
+ */
