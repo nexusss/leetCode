@@ -21,7 +21,8 @@ public:
 
     TestMove(const TestMove<T>& t){
         cout << "Copy constr\n";
-        *this = t;
+        auto tmp = t;
+        swap(tmp);
     }
 
     TestMove<T>& operator=(const TestMove<T>& t){
@@ -53,9 +54,11 @@ public:
         return *this;
     }
 
-    TestMove(TestMove<T>&& t){
+    TestMove(TestMove<T>&& t):data(t.data),size(t.size){
         cout << "Move constr\n";
-        *this = std::move(t);
+        t.data = nullptr;
+        t.size = 0;
+        //*this = std::move(t);
     }
 
     TestMove<T>& operator=(TestMove<T>&& t){
